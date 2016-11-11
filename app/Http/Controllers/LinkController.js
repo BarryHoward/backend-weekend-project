@@ -1,5 +1,7 @@
 'use strict'
 
+const Link = use('App/Model/Link')
+
 class LinkController {
 
   * create (request, response) {
