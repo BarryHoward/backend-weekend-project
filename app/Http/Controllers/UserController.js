@@ -11,6 +11,10 @@ class UserController {
 		let user = yield User.create(data)
 		response.status(201).json({text: "User created!", data: user})
 
+		// catch(error){
+		// 	response.stats(401).json({text: "Something Happened"})
+		// }
+
 	}
 
 	* login (request, response){
