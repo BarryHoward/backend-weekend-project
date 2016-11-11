@@ -24,4 +24,5 @@ Route.post('/register', 'UserController.register')
 Route.post('/login', 'UserController.login')
 
 
-Route.post('/link', 'LinkController.post')
+Route.post('/link', 'LinkController.create').middleware('auth')
+Route.delete('/link', 'LinkController.delete').middleware('auth')
