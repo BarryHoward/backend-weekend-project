@@ -7,6 +7,7 @@ class LinksTableSchema extends Schema {
   up () {
     this.create('links', (table) => {
       table.timestamps()
+      table.increments()
       
       table.integer('user_id')
       table.foreign('user_id').references('users.id')

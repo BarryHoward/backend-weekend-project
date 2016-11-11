@@ -7,6 +7,7 @@ class CommentsTableSchema extends Schema {
   up () {
     this.create('comments', (table) => {
       table.timestamps()
+      table.increments()
 
       table.integer('user_id')
       table.foreign('user_id').references('users.id')
