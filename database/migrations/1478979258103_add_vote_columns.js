@@ -9,15 +9,19 @@ class AddVoteColumnsTableSchema extends Schema {
       table.integer('votes')
     })
 
-    this.table('comments' (table) =>{
+    this.table('comments', (table) =>{
       table.integer('votes')
     })
   }
 
   down () {
-    // this.table('links', (table) => {
-    //   // opposite of up goes here
-    // })
+    this.table('links', (table) => {
+      table.dropColumn('votes')
+    })
+
+    this.table('comments', (table) =>{
+      table.dropColumn('votes')
+    })
   }
 
 }
