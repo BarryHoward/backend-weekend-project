@@ -37,7 +37,10 @@ class CommentController {
 	}
 
 	* show (request, response){
+		let linkId = request.param('link_id')
+		console.log(linkId)
 		const comment_list = yield Comment.query().table('comments')
+		.where('links_id', linkId)
 		.orderBy('votes', 'desc')
 		.orderBy('created_at', 'desc')
 		response.json(comment_list)
