@@ -1,6 +1,7 @@
 'use strict'
 
 const VotesComment = use('App/Model/VotesComment')
+const Comment = use('App/Model/Comment.js')
 
 class VotesCommentController {
 
