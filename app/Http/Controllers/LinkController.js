@@ -6,12 +6,15 @@ class LinkController {
 
 	* create (request, response) {
 		let data = request.only('title', 'destination_url')
-		let user = request.authUser
-		data.user_id = user.id
-		let link = yield Link.create(data)
-
-		link.save()
-		response.status(201).json(link)
+		try {
+			let user = request.authUser
+			data.user_id = user.id
+			let link = yield Link.create(data)
+			link.save()
+			response.status(201).json(link)
+		} catch (e) {
+			response.status(403).json({text: "No logged-in user"})
+		}
 	}
 
 	* delete (request, response){
