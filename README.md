@@ -1,35 +1,64 @@
-# AdonisJs Application
+Link Share Weekend Project
 
-This repo is the pre-configured project structure to be used for creating ambitious web servers using AdonisJs.
+November 12, 2016
 
-> Make sure to star the official [framework repo](https://github.com/adonisjs/adonis-framework) or [tweet on twitter](https://twitter.com/intent/tweet?url=http://adonisjs.com&text=I%20am%20using%20AdonisJs,%20a%20practical%20MVC%20framework%20for%20nodejs&hashtags=nodejs,adonisframework) :wave:
+[github repo](https://github.com/BarryHoward/link_share)
 
-## Story
+[heroku deployment](https://link-share-barry.herokuapp.com/)
 
-One day a :boy: wanted to write a web application to slowly turn it into a business and make some :moneybag: for better living. Being a Javascript lover, he decided to go with Node.js. 
+API and Routes:
 
-Hosting Node.js applications are cheap and offers lots of mordern programming concepts to build realtime data rich applications.
+	Register/Login
 
-He was so excited and full of energy to build this application and share it with the world. But soon his dreams started struggling with the amount of decisions he has to make, just to build an MVP of his idea. These decisions were not even related to the business and was about.
+	/register : Register user
+	request verb: Post
+	info:  Include username, password, email parameters in request
 
-1. How should I structure my application?
-2. Why do I need to download 20 modules just to start an HTTP server, parse request body and upload files.
-3. How should I manage the authentication on website, and expose public API for others to interact with the data?
-4. What do I need to do to secure my application from web attacks and how to handle CORS?
-5. Why do I have ton of `require` statements everywhere?
-6. How the heck should I test my code? I am having hard time mocking dependencies.
-7. **WHY THE :fish:** there are no standards to write some code. Hell I am not going to write this application and going for a walk.
+	/login : Login user
+	request verb: Post
+	info:  Include username and password paramters in request.  Token contained in parameter access_token in response
 
+------------------------------------------------------------------------------------------------------
+	Links
 
-## Not Anymore
+	/links : Get list of posted links
+	request verb: Get
+	info: Organized by vote count and then creation date
 
-This is so frustating. Node.js is a beautiful language but all of the above questions have never been answered together. We all love writing small concise modules but business are not created by downloading 20 modules.
+	/links : Create new link
+	request verb: Post (logged-in)
+	info:  Include title and destination_url parameters in request.  Must include token in header for login.  Link post will be associated with user.
 
-Developers needs productive tools, so that they can focus on what matters, and not on downloading & finding the best ways to combine these small modules. 
+	/links/:linkId : Delete link
+	request verb: Delete (logged-in)
+	info:  Must include token in header for login.  Link post must be from associated user.
 
-## AdonisJs
+------------------------------------------------------------------------------------------------------
+	Comments
 
-AdonisJs is a beautiful framework with pre-configured answers to all of your questions. We not only created this framework, but validated the features of framework with realtime problems and still improving every bit, so that you have to write less and structured code.
+	/links/:link_id/comments : Get list of comments from a link
+	request verb: Get
+	info: Ordered by votes and then creation date
 
-This time a :boy: will write his ambitious application and will set the world on :fire:``. Don't hesitate to work on your ideas and we promise to improve the framework every :sunny: and :first_quarter_moon_with_face: and YESSSS do not forget to star us on [:octocat:](https://github.com/adonisjs/adonis-framework)
+	/links/:link_id/comments/:comment_id : Get children comments of a specified parent comment
+	request verb: Get
+	info: Ordered by votes and then creation date
 
+	/links/:link_id/comments : Post comment for associated link
+	request verb: Post (logged-in)
+	info:  Include text in body parameter.  If a parent comment exists, its id should be stored in parent_comment_id parameter.  Must include token in header for login.  Comment will be associated with user.
+
+	/links/:linkId/comments/:comment_id : Delete Comment
+	request verb: Delete (logged-in)
+	info:  Must include token in header for login.  Comment must be from associated user.
+
+------------------------------------------------------------------------------------------------------
+	Votes
+
+	/links/:link_id : Add vote to link
+	request verb: Post (logged-in)
+	info: Creates a vote in table.  Must include token in header for login.  Same user cannot vote on link multiple times
+
+	/links/:link_id/commments/:comment_id : Add vote to comment
+	request verb: Post (logged-in)
+	info: Creates a vote in table.  Must include token in header for login.  Same user cannot vote on comment multiple times

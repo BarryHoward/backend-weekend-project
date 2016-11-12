@@ -47,6 +47,8 @@ class CommentController {
 		let parentId = request.param('comment_id')
 		let comment_list = yield Comment.query().table('comments')
 		.where('parent_comment_id', parentId)
+		.orderBy('votes', 'desc')
+		.orderBy('created_at', 'desc')
 		response.json(comment_list)
 
 	}
