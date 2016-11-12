@@ -15,9 +15,9 @@ class AddVoteColumnsTableSchema extends Schema {
   }
 
   down () {
-    this.table('links', (table) => {
-      // opposite of up goes here
-    })
+    // this.table('links', (table) => {
+    //   // opposite of up goes here
+    // })
   }
 
 }
