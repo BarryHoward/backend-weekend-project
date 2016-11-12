@@ -17,21 +17,29 @@ class VotesLinkController {
 
 		if (exists.length === 0){
 			let vote = yield VotesLink.create(data)
-			vote.save()
+			yield vote.save()
 
-			// const link = yield Link.query().table('links')
-			// .where("id", data.links_id)
-			// link.votes = link.votes+1
-			// link.save()
-
-			response.status(201).json(vote)
+			let link =  yield Link.findBy('id', data.links_id)
+			let vote_count = link.votes
+			if (vote_count === null){
+				link.votes = 1
+			} else {
+				link.votes = vote_count+1
+			}
+			yield link.save()
+			response.status(201).json([vote, link])
 		} else {
 			response.status(403).json({text: "Can't vote for that again"})
 		}
-
-
-
 	}
+
+	// * show (request, response) {
+	// 	let linkId = request.param('link_id')
+	// 	let link =  yield Link.findBy('id', linkId)
+	// 	console.log(link.votes)
+	// 	response.status(201).json(link)
+
+	// }
 
 }
 

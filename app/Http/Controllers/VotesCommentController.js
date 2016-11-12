@@ -19,13 +19,17 @@ class VotesCommentController {
 
 		if (exists.length === 0){
 			let vote = yield VotesComment.create(data)
-			vote.save()
+			yield vote.save()
 
-			// const comment = yield Comment.query().table('comments')
-			// .where("id", data.comments_id)
-			// coment.votes = comment.votes+1
-			// comment.save()
-			response.status(201).json(vote)
+			let comment =  yield Comment.findBy('id', data.comments_id)
+			if (comment.votes === null){
+				comment.votes = 1
+			} else {
+				comment.votes = comment.votes+1
+				console.log(comment.votes)
+			}
+			yield comment.save()
+			response.status(201).json([vote, comment])
 		} else {
 			response.status(403).json({text: "Can't vote for that again"})
 		}

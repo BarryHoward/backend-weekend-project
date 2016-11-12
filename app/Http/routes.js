@@ -19,6 +19,7 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 
+
 Route.post('/register', 'UserController.register')
 Route.post('/login', 'UserController.login')
 
@@ -31,6 +32,9 @@ Route.get('/links', 'LinkController.show')
 Route.post('/links/:link_id/comments', 'CommentController.create').middleware('auth')
 Route.delete('/links/:link_id/comments/:comment_id', 'CommentController.delete').middleware('auth')
 Route.get('/links/:link_id/comments', 'CommentController.show')
+Route.get('/links/:link_id/comments/:comment_id', 'CommentController.children')
+
 
 Route.post('/links/:link_id', 'VotesLinkController.vote').middleware('auth')
 Route.post('/links/:link_id/comments/:comment_id', 'VotesCommentController.vote').middleware('auth')
+// Route.get('/links/:link_id', 'VotesLinkController.show')

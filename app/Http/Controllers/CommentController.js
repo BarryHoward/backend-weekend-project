@@ -5,7 +5,7 @@ const Comment = use('App/Model/Comment')
 class CommentController {
 
 	* create (request, response) {
-		let data = request.only('body')
+		let data = request.only('body', 'parent_comment_id')
 		let linkId = request.param('link_id')
 		data.links_id = linkId
 
@@ -38,8 +38,17 @@ class CommentController {
 
 	* show (request, response){
 		const comment_list = yield Comment.query().table('comments')
+		.orderBy('votes', 'desc')
 		.orderBy('created_at', 'desc')
 		response.json(comment_list)
+	}
+
+	* children (request, response){
+		let parentId = request.param('comment_id')
+		let comment_list = yield Comment.query().table('comments')
+		.where('parent_comment_id', parentId)
+		response.json(comment_list)
+
 	}
 
 }

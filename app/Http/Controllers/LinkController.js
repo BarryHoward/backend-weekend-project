@@ -35,6 +35,7 @@ class LinkController {
 
 	* show (request, response){
 		const link_list = yield Link.query().table('links')
+		.orderBy('votes', 'desc')
 		.orderBy('created_at', 'desc')
 		response.json(link_list)
 	}
