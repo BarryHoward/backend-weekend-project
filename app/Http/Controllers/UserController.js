@@ -11,10 +11,6 @@ class UserController {
 		let user = yield User.create(data)
 		response.status(201).json({text: "User created!", data: user})
 
-		// catch(error){
-		// 	response.stats(401).json({text: "Something Happened"})
-		// }
-
 	}
 
 	* login (request, response){
@@ -22,12 +18,10 @@ class UserController {
 		let user = yield User.findBy('username', data.username)
 
 		try {
-
 			let correct = Hash.verify(data.password, user.password)
 			if (!correct) { 
 				throw new Error() 
 			}
-
 			user.access_token = yield request.auth.generate(user)
       		response.json(user)
 
@@ -35,7 +29,6 @@ class UserController {
 			response.status(401).json({text: "Wrong user name or password!"})
 
 		}
-
 
 		if (user){
 			let correct =  yield Hash.verify(data.password, user.password)
