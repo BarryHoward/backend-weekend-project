@@ -1,6 +1,7 @@
 'use strict'
 
 const VotesLink = use('App/Model/VotesLink')
+const Link = use('App/Model/Link.js')
 
 class VotesLinkController {
 
@@ -17,6 +18,12 @@ class VotesLinkController {
 		if (exists.length === 0){
 			let vote = yield VotesLink.create(data)
 			vote.save()
+
+			// const link = yield Link.query().table('links')
+			// .where("id", data.links_id)
+			// link.votes = link.votes+1
+			// link.save()
+
 			response.status(201).json(vote)
 		} else {
 			response.status(403).json({text: "Can't vote for that again"})
